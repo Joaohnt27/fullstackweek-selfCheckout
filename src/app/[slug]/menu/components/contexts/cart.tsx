@@ -3,7 +3,7 @@
 import { Product } from "@prisma/client";
 import { createContext, ReactNode, useState } from "react";
 
-interface CartProduct
+export interface CartProduct
   extends Pick<Product, "id" | "name" | "price" | "imageUrl"> {
   quantity: number;
 }
@@ -30,6 +30,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setIsOpen((prev) => !prev);
   };
   const addProduct = (product: CartProduct) => {
+    // Verificar se o produto está no carrinho, se tiver aumente a quantidade. 
+    // Caso contrário, adicione
     const productIsAlreadyOnTheCart = products.some(
       (prevProduct) => prevProduct.id === product.id,
     );
