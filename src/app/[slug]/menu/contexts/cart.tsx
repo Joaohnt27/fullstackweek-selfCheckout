@@ -16,7 +16,7 @@ export interface ICartContext {
   toggleCart: () => void;
   addProduct: (product: CartProduct) => void;
   decreaseProductQuantity: (productId: string) => void;
-  increaseProductQuantity: (prouctId: string) => void;
+  increaseProductQuantity: (productId: string) => void;
   removeProduct: (productId: string) => void;
 }
 
@@ -38,16 +38,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const total = products.reduce((acc, product) => {
     return acc + product.price * product.quantity;
-  }, 0)
-const totalQuantity = products.reduce((acc, product) => {
-  return acc + product.quantity;
-}, 0);
+  }, 0);
+  const totalQuantity = products.reduce((acc, product) => {
+    return acc + product.quantity;
+  }, 0);
   const toggleCart = () => {
     setIsOpen((prev) => !prev);
   };
   const addProduct = (product: CartProduct) => {
-    // Verificar se o produto está no carrinho, se tiver aumente a quantidade. 
-    // Caso contrário, adicione
     const productIsAlreadyOnTheCart = products.some(
       (prevProduct) => prevProduct.id === product.id,
     );
@@ -90,8 +88,10 @@ const totalQuantity = products.reduce((acc, product) => {
     });
   };
   const removeProduct = (productId: string) => {
-      setProducts(prevProducts => prevProducts.filter(prevProduct => prevProduct.id !== productId));
-  }
+    setProducts((prevProducts) =>
+      prevProducts.filter((prevProduct) => prevProduct.id !== productId),
+    );
+  };
   return (
     <CartContext.Provider
       value={{
